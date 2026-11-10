@@ -12,7 +12,9 @@ long_text$Time <- as.factor(long_text$Time)
 
 #boxplot of scores by time faceted by group#####
 boxplot_text <- long_text %>% ggplot(aes(Time, Score, fill=Time))+
-  geom_boxplot()+  facet_wrap(Group~.)
+  geom_boxplot()+  
+  labs(x="Change in Texting Habits by Group", y="Number of Texts")+
+  facet_wrap(Group~.)
 
 
 boxplot_text
