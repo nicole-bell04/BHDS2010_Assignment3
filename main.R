@@ -1,17 +1,10 @@
 #Assignment 3: Collaborating in GitHub
 
-#data preparation ONLY for the purposes of the boxplot, NOT to go into the main####
-long_text <- melt(text, id.vars=c("Participant", "Group"), variable.name="Time", 
-                          value.name="Score")
-colnames(long_text) <- c("Participant", "Group", "Time", "Score")
-
-long_text$Time <- as.factor(long_text$Time)
-
 #boxplot of scores by time faceted by group#####
 #To construct a boxplot that not only shows the change in texting habits over a 
 #period of six months, but also shows the difference between Group 1 and Group 
 #2's change in texting, a faceted approach is used.  
-boxplot_text <- long_text %>% ggplot(aes(Time, Score, fill=Time))+
+boxplot_text <- text_long %>% ggplot(aes(Time, Text_Messages, fill=Time))+
   geom_boxplot()+  
   labs(x="Change in Texting Habits by Group", y="Number of Texts")+
   scale_y_continuous(breaks=seq(from=0, to=90, by=4))+
