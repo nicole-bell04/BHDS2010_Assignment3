@@ -4,7 +4,7 @@
 #the average baseline score and the average six month score for Groups 1 and 2, 
 #a faceted approach is used once more. An error bar is also included to depict
 #the 95% confidence interval for each score's average. 
-barchart_text <- long_text %>% ggplot(aes(Time, Score, fill=Time))+
+barchart_text <- text_long %>% ggplot(aes(Time, Text_Messages, fill=Time))+
   stat_summary(fun=mean, geom="bar")+
   facet_wrap(Group~.)+
   scale_y_continuous(breaks=seq(from=0, to=100, by=4))+
