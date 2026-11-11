@@ -1,7 +1,5 @@
 #Assignment 3: Collaborating in GitHub
 
-library(Hmisc)
-
 #Similarly, to construct a bar graph that displays a side-by-side comparison of 
 #the average baseline score and the average six month score for Groups 1 and 2, 
 #a faceted approach is used once more. An error bar is also included to depict
