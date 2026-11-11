@@ -1,10 +1,6 @@
 #Assignment 3: Collaborating in GitHub
 
 #data preparation ONLY for the purposes of the boxplot, NOT to go into the main####
-library(dplyr)
-library(ggplot2)
-library(reshape)
-library(pastecs)
 long_text <- melt(text, id.vars=c("Participant", "Group"), variable.name="Time", 
                           value.name="Score")
 colnames(long_text) <- c("Participant", "Group", "Time", "Score")
