@@ -155,3 +155,20 @@ barchart_text
 ```
 
 Beginning with the baseline scores, we are able to see that Group 1 has a slightly lower average score than Group 2, of approximately 64.84 versus 65.60, consistent with the previously examined summary statistics. Group 2 appears to have a slightly larger 95% confidence interval than Group 1. Given that both groups have the same sample size, this can be attributed to Group 1 having a lower standard deviation than Group 2, of 10.68 versus 10.84, respectively. Both groups exhibit a decrease in average texting scores after six months, with Group 1 not only having a smaller average follow-up score than Group 2 (of 52.96 versus 61.84), but also a much greater decrease in average scores of approximately 12 versus 4. Unlike the baseline scores, we can see that the six month scores have a larger difference between the two 95% confidence intervals, with Group 1 having a greater distribution of scores about the mean than Group 2. From this, we can conclude that Group 1 also had a greater change in variability than Group 2 after six months. 
+
+
+# Conclusion
+
+Overall, Group 1 had a greater average change of texting habits within six months than Group 2. Although Group 1 had a lower average baseline score than Group 2, the difference of 64.84 versus 65.60 was marginal. Further, comparing each group's mean to its median showed that both groups appeared to be roughly symmetric, with Group 1 having a slight right skew and Group 2 appearing approximately normally distributed. 
+
+After six months, however, the two groups did not appear to have similar averages or distributions. Group 1 now had an average texting rate of 52.96 messages, which was much lower than Group 2's average of 61.84. Initially, Group 1 had a smaller range and standard deviation than Group 2, of 38 & 10.68 versus 43 & 10.84. After six months, both the visualizations and summary statistics show that Group 1 now has a considerably larger range and standard deviation than Group 2, of 69 and 16.33 versus 33 and 9.41. Lastly, comparing the means and medians of the Six Month measurements shows that both groups are now left skewed.
+
+These findings illustrate that although the two groups had relatively similar texting habits initially, they diverged the six month period, with Group 1 experiencing a more drastic decrease and greater dispersion, while Group 2 maintained a more consistent decline in texting frequency. 
+
+
+
+
+
+
+
+
