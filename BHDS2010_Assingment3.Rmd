@@ -18,9 +18,10 @@ output: pdf_document
 
 # Introduction
 
-This report utilizes the TextMessages.csv dataset to examine the relationship between two groups of participants when their texting habits were recorded at two different points in time. The variables `Baseline` and `Six_Months` being the initial instance an individual's texting frequency was first recorded, then re-recorded six months later.
+This report utilizes the TextMessages.csv dataset to examine the relationship between two groups of participants who had their texting habits recorded at two different points in time. The variables `Baseline` and `Six_Months` represent the total
+number of text messages a person typed initially as well as six months later. 
 
-Findings show that Group 2 had a higher average number of baseline texts sent than Group 1, of 65.6 versus 64.84. However, Group 1 had the greatest change in frequency and ultimately a lower average texting rate at six months than Group 2 (52.96 versus 61.84).
+Findings show that Group 2 had a higher average number of baseline texts sent than Group 1, of 65.6 versus 64.84. However, Group 1 had the greatest change in frequency and ultimately a lower average texting rate after six months than Group 2 (52.96 versus 61.84).
 
 
 # Section 1: Environment Setup & Data Preparation
