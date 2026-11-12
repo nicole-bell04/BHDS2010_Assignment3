@@ -1,0 +1,151 @@
+---
+title: "Assignment 3"
+output: pdf_document
+date: "2026-11-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+---
+title: "Assignment 3: Longitudinal Text Messaging Analysis"
+author: "Justin Coles, Nicole Bellantoni"
+date: "November 11, 2026"
+output: pdf_document
+---
+
+
+# Section 1: Environment Setup & Data Preparation
+
+First, I loaded the `pastecs`, `tidyr`, and `dplyr` packages to perform data wrangling and descriptive statistics. Then, I imported `TextMessages.csv` from the project repository. 
+
+I converted `Group` into a labeled factor and the dataset into a tidy long format using `pivot_longer()` so that `Time` is a categorical variable with `Group`. Then, I exported this clean long dataset as `TextMessages_Clean_Long.csv` so my partner can import it directly to create the required faceted boxplots and bar charts.
+
+```{r data-preparation}
+# I loaded pastecs to compute detailed descriptive statistics using stat.desc()
+library(pastecs)
+
+# I loaded tidyr and dplyr to perform data wrangling and reshape the dataset
+library(tidyr)
+library(dplyr)
+
+# I imported the shared dataset from the project repository into text_data
+text_data <- read.csv("TextMessages.csv")
+
+# I checked the initial wide structure and dimension of the raw data
+str(text_data)
+head(text_data)
+
+# I converted Group into a labeled factor for clean categorical identification
+text_data$Group <- factor(text_data$Group, 
+                          levels = c(1, 2), 
+                          labels = c("Group 1", "Group 2"))
+
+# I reshaped Baseline and Six_months from wide into tidy long format
+text_long <- text_data %>%
+  pivot_longer(
+    cols = c(Baseline, Six_months),
+    names_to = "Time",
+    values_to = "Text_Messages"
+  ) %>%
+  mutate(
+    Time = factor(Time, 
+                  levels = c("Baseline", "Six_months"),
+                  labels = c("Baseline", "6 Months"))
+  )
+
+# I verified the structure of the reshaped long data frame
+str(text_long)
+head(text_long)
+
+# I saved the clean long data frame so my partner can use it for visual tasks
+write.csv(text_long, "TextMessages_Clean_Long.csv", row.names = FALSE)
+```
+
+
+---
+
+# Section 2: Stratified Summary Statistics by Group and Time
+
+I calculated summary statistics for `Text_Messages` stratified jointly by `Group` and `Time` using `by()` paired with `stat.desc()` from the `pastecs` package.
+
+```{r stratified-summary-stats}
+# I computed stratified summary statistics across Group and Time using stat.desc
+stratified_summary <- by(
+  text_long$Text_Messages,
+  list(text_long$Group, text_long$Time),
+  stat.desc,
+  basic = TRUE
+)
+
+# I displayed the stratified summary statistics for Group 1 and Group 2 across both time points
+stratified_summary
+```
+
+###  Summary:
+
+**Group 1 Statistics:**
+* **Baseline (n = 25):** Mean = 64.84, Median = 64.00, SD = 10.68, Variance = 114.06, Range = 38.00 (Minimum = 47.00, Maximum = 85.00), SE = 2.14.
+* **6 Months (n = 25):** Mean = 52.96, Median = 58.00, SD = 16.33, Variance = 266.71, Range = 69.00 (Minimum = 9.00, Maximum = 78.00), SE = 3.27.
+
+**Group 2 Statistics:**
+* **Baseline (n = 25):** Mean = 65.60, Median = 65.00, SD = 10.84, Variance = 117.42, Range = 43.00 (Minimum = 46.00, Maximum = 89.00), SE = 2.17.
+* **6 Months (n = 25):** Mean = 61.84, Median = 62.00, SD = 9.41, Variance = 88.56, Range = 33.00 (Minimum = 46.00, Maximum = 79.00), SE = 1.88.
+
+### Inferences:
+1. **Baseline:** At Baseline, both intervention groups exhibited nearly identical messaging rates (Group 1 Mean = 64.84 vs. Group 2 Mean = 65.60) and very similar variability (SD = 10.68 vs. 10.84), showing that the groups were comparable prior to intervention.
+2. **Longitudinal Change:** Over the 6-month period, Group 1 demonstrated a substantial decrease in text messaging, dropping by an average of 11.88 messages (from 64.84 down to 52.96). In contrast, Group 2 showed a much smaller reduction of only 3.76 messages (from 65.60 down to 61.84).
+3. **Variance:** While Group 1 experienced a greater reduction in text messages, its spread widened considerably at 6 months (SD increased from 10.68 to 16.33; range increased from 38 to 69). In contrast, Group 2 maintained a tight, consistent spread (SD decreased from 10.84 to 9.41; range decreased from 43 to 33).
+
+---
+
+# Section 3: Boxplot Visualization by Group and Time
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+#The ggplot2 package is first loaded to construct visualizations
+library(ggplot2)
+
+#To construct a boxplot that not only shows the change in texting habits over a 
+#period of six months, but also shows the difference between Group 1 and Group 
+#2's change in texting, a faceted approach is used.  
+boxplot_text <- text_long %>% ggplot(aes(Time, Text_Messages, fill=Time))+
+  geom_boxplot()+  
+  labs(title="Change in Texting Habits by Group", x="Data Collection Period",
+       y="Number of Texts")+
+  scale_y_continuous(breaks=seq(from=0, to=90, by=4))+
+  facet_wrap(Group~.)
+
+#To view the faceted boxplot, the object is re-typed.
+boxplot_text
+```
+
+From this, we are able to see that Group 2 had both the highest and lowest baseline texting scores, as well as the highest score after six months, while Group 1 had the lowest score after six months. Group 2 has a baseline score that appears to be approximately normally distributed, whereas Group 1 appears to have a slightly right skewed distribution. However, both follow-up scores are noticeably left skewed. Both groups had a noticeable decrease in the number of text messages sent after six months, with Group 1 appearing to have a greater decrease in median scores (from 64 to 58 versus 65 to 62). Althought Group 1 has a slightly lower median baseline score than Group 2, its interquartile range is slightly greater, suggesting a greater spread throughout the middle 50% of the data. Further, Group 1 had considerably low outliers in its six month scores, whereas Group 2 had multiple high outliers. Finally, both groups have a much smaller interquartile range at six months compared to their baseline scores, consistent with a smaller amount of variability among the middle 50% of follow-up scores. 
+
+---
+
+# Section 4: Bar Chart Visualization by Group and Time
+ 
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+#The Hmisc package is loaded to construct errorbars that represent the 95%
+#confidence interval of the mean.
+library(Hmisc)
+
+#Similarly, to construct a bar graph that displays a side-by-side comparison of 
+#the average baseline score and the average six month score for Groups 1 and 2, 
+#a faceted approach is used once more. An error bar is also included to depict
+#the 95% confidence interval for each score's average. 
+barchart_text <- text_long %>% ggplot(aes(Time, Text_Messages, fill=Time))+
+  stat_summary(fun=mean, geom="bar")+
+  facet_wrap(Group~.)+
+  scale_y_continuous(breaks=seq(from=0, to=100, by=4))+
+  stat_summary(fun.data = mean_cl_boot, geom= "pointrange", colour="Black")+
+  labs(title="Average Change in Texting Habits by Group", 
+       x="Data Collection Period", y="Average Number of Texts")
+
+#To view the bar chart, the object is re-typed.
+barchart_text
+```
+
+Beginning with the baseline scores, we are able to see that Group 1 has a slightly lower average score than Group 2, of approximately 64.84 versus 65.60, consistent with the previously examined summary statistics. Group 2 appears to have a slightly larger 95% confidence interval than Group 1. Given that both groups have the same sample size, this can be attributed to Group 1 having a lower standard deviation than Group 2, of 10.68 versus 10.84, respectively. Both groups exhibit a decrease in average texting scores after six months, with Group 1 not only having a smaller average follow-up score than Group 2 (of 52.96 versus 61.84), but also a much greater decrease in average scores of approximately 12 versus 4. Unlike the baseline scores, we can see that the six month scores have a larger difference between the two 95% confidence intervals, with Group 1 having a greater distribution of scores about the mean than Group 2. From this, we can conclude that Group 1 also had a greater change in variability than Group 2 after six months. 

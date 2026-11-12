@@ -1,5 +1,17 @@
 #Assignment 3: Collaborating in GitHub
 
+install.packages("reshape")
+install.packages("pastecs")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("Hmisc")
+library(reshape)
+library(pastecs)
+library(dplyr)
+library(ggplot2)
+library(Hmisc)
+
+Bar-Chart-Visualizations
 #Similarly, to construct a bar graph that displays a side-by-side comparison of 
 #the average baseline score and the average six month score for Groups 1 and 2, 
 #a faceted approach is used once more. An error bar is also included to depict
