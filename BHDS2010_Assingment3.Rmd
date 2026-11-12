@@ -23,7 +23,7 @@ First, I loaded the `pastecs`, `tidyr`, and `dplyr` packages to perform data wra
 
 I converted `Group` into a labeled factor and the dataset into a tidy long format using `pivot_longer()` so that `Time` is a categorical variable with `Group`. Then, I exported this clean long dataset as `TextMessages_Clean_Long.csv` so my partner can import it directly to create the required faceted boxplots and bar charts.
 
-```{r data-preparation}
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
 # I loaded pastecs to compute detailed descriptive statistics using stat.desc()
 library(pastecs)
 
@@ -71,7 +71,7 @@ write.csv(text_long, "TextMessages_Clean_Long.csv", row.names = FALSE)
 
 I calculated summary statistics for `Text_Messages` stratified jointly by `Group` and `Time` using `by()` paired with `stat.desc()` from the `pastecs` package.
 
-```{r stratified-summary-stats}
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
 # I computed stratified summary statistics across Group and Time using stat.desc
 stratified_summary <- by(
   text_long$Text_Messages,
